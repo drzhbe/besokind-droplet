@@ -1,5 +1,14 @@
 # besokind-droplet
-It is a server for besokind.ru. Earlier besokind.ru was hosted on `firebase`, we used it's database, auth and hosting capabilities. But when we started to develop different cities, we understood that multi-field searches would be pain, escpecially when we'll start to implement search filters.
+1. [Intro](#intro)
+2. [Goal](#goal)
+3. [Current situation](#current-situation)
+4. [Usage](#usage)
+4. [Install](#install)
+
+## Intro
+It is a server for besokind.ru. The client is placed in another repo [besokind-elm](https://github.com/drzhbe/besokind-elm).
+
+Earlier besokind.ru was hosted on `firebase`, we used it's database, auth and hosting capabilities. But when we started to develop different cities, we understood that multi-field searches would be pain, escpecially when we'll start to implement search filters.
 
 The second reason why we move from firebase is the time gap at the start of the application. I still don't know how to beat this lag, looks like it is 1 second to establish websocket and about 5-10 second to auth through social medias.
 
@@ -7,12 +16,12 @@ The second reason why we move from firebase is the time gap at the start of the 
 So the main goal of this repo for now is to implement every firebase database interaction we use in [beta.html](https://github.com/drzhbe/besokind-elm/blob/master/public/beta.html).
 
 ## Current situation
-We have
-* auth
-* getUser
-* setUserCity
-* createCard
-* feed
+We have methods
+* /auth
+* /getUser
+* /setUserCity
+* /createCard
+* /feed
 
 ## Usage
 
