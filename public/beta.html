@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html>
+<title>Будь Добр</title>
+<meta name='description' content='Здесь люди помогают друг другу и получают за это кармапоинты, а организации предоставляют свои услуги за кармапоинты'>
+<meta name="Keywords" content="Добро, помощь, карма, благотворительность">
+
+<meta property='og:title' content='Будь Добр'>
+<meta property='og:description' content='Дружище, здесь ты можешь попросить о помощи или помочь кому-то'>
+<meta property='og:image' content='https://besokind.ru/img/besokind_wide.png'>
+<meta property='og:url' content='https://besokind.ru'>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="img/favicon.png">
+<link rel="apple-touch-icon" sizes="152x152" href="img/favicon.png">
+<style>
+  body {
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,Ubuntu,Roboto,Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 16px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .light-btn {
+    color: #555;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .light-btn:hover {
+    text-decoration: underline;
+  }
+  .card {
+    cursor: pointer;
+  }
+  .card:hover {
+    background: #f9f9f9;
+  }
+  .card-input::-webkit-input-placeholder { color: #333; }
+  .card-input::-moz-placeholder { color: #333; }
+  .card-input:focus::-webkit-input-placeholder { color: #ddd; }
+  .card-input:focus::-moz-placeholder { color: #ddd; }
+  .card-header__author-photo.online::after {
+    content: "";
+    background-color: limegreen;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: 2px solid #fff;
+    border-radius: 0 0 4px 0;
+    width: 10px;
+    height: 10px;
+  }
+  .horizontal-list li {
+    display: inline-block;
+  }
+  .nav-item {
+    line-height: 48px;
+    height: 48px;
+    margin-right: 10px;
+    color: bisque;
+    cursor: pointer;
+  }
+  .nav-item:hover {
+    text-decoration: underline;
+  }
+  .nav-item._disabled {
+    color: #ffb494;
+  }
+  /*.nav-item._disabled:hover {
+    text-decoration: none;
+    cursor: default;
+  }*/
+  .notification-list {
+    cursor: auto;
+  }
+  .notification-list li {
+    display: block;
+    cursor: pointer;
+  }
+  .notification-list li:first-child {
+    border-radius: 5px 5px 0 0;
+    padding-top: 4px;
+    /*padding: 12px 10px 8px 10px;*/
+  }
+  .notification-list li:last-child {
+    border-radius: 0 0 5px 5px;
+    padding-bottom: 4px;
+    /*padding: 8px 10px 12px 10px;*/
+  }
+  .notification-list li:hover {
+    background: #f9f9f9;
+  }
+  .notification-list li div {
+    padding: 8px 10px;
+  }
+  .city-list-item {
+    cursor: pointer;
+  }
+  .city-list-item:hover {
+    background: #f9f9f9;
+  }
+  ._assigned {
+    background: #f9f9f9;
+  }
+</style>
+
+<div id="main"></div>
+
+<!-- <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script> -->
+<script src='src/date-fns-distance.js'></script>
+<script src="src/fetch.js"></script>
+<script src="src/cities-cut.js"></script>
+<script src="src/db.js"></script>
+<script src="src/app.js"></script>
+<script>
+  console.log('Algebraic!')
+
+
+  function addCardToList(card) {
+    card = card.val();
+    card.creationTimeFriendly = dateFnsDistanceInWords(card.creationTime);
+    app.ports.addCardToList.send(card);
+  }
+
+
+  function updateCard(card) {
+    card = card.val();
+    card.creationTimeFriendly = dateFnsDistanceInWords(card.creationTime);
+    app.ports.updateCard.send(card);
+  }
+
+
+  /*
+    depends on `dateFnsDistanceInWords`
+  */
+  function getCards(lastCardId) {
+    console.log('[fetchStreamCards] and [getCards] aren`t implemented in beta-page.html')
+  }
+
+
+  /*
+    @param {String} url
+    @param {Object} params
+    @param {Function} callback
+    @param {Boolean} post
+
+    readyState:
+    0 UNSENT
+    1 OPENED
+    2 HEADERS_RECEIVED
+    3 LOADING
+    4 DONE
+  */
+  function xhr(url, params, callback, post) {
+    var type = post ? 'POST' : 'GET';
+    var xhr = new XMLHttpRequest();
+    xhr.open(type, url + '?' + getQueryParams(params));
+    xhr.withCredentials = true;
+    xhr.onreadystatechange = function() {
+      console.log('\n\nxhr.readyState', typeof xhr.readyState, xhr.readyState, '\n\n');
+      if (xhr.readyState !== 4) return;
+      console.log('\n\nxhr.status', typeof xhr.status, xhr.status, '\n\n');
+      if (xhr.status !== 200) {
+        console.log('xhr.status', xhr.status, xhr.statusText);
+      } else {
+        console.log('\n\nxhr.responseText', typeof xhr.responseText, xhr.responseText, '\n\n');
+        callback(JSON.parse(xhr.responseText));
+      }
+    };
+    xhr.send(null);
+  }
+
+
+  function feed(city) {
+    // xhr('/feed', {city: city}, function(data) {
+    //   if (!data.cards) return;
+
+    //   var cards = data.cards.map(function(dbCard) {
+    //     var appCard = db.toApp.card(dbCard);
+    //     appCard.creationTime = +new Date(appCard.creationTime);
+    //     appCard.creationTimeFriendly = dateFnsDistanceInWords(appCard.creationTime);
+    //     return appCard;
+    //   });
+
+    //   app.ports.showCards.send(cards);
+    // });
+    
+    var feedQueryParams = {city: city};
+    fetch('/feed?' + getQueryParams(feedQueryParams), {credentials: 'include'})
+        .then(function(res) {
+          res.json()
+            .then(data => {
+              var cards = data.cards.map(function(dbCard) {
+                var appCard = db.toApp.card(dbCard);
+                appCard.creationTime = +new Date(appCard.creationTime);
+                appCard.creationTimeFriendly = dateFnsDistanceInWords(appCard.creationTime);
+                return appCard;
+              });
+
+              console.log('\n\ncards', typeof cards, cards, '\n\n');
+
+              app.ports.showCards.send(cards);
+            })
+            .catch(error => console.error('Error during json parsing [feed fetched]:', error))
+        })
+        .catch(function(error) {
+          console.error('Error during [fetching feed]:', error);
+        });
+  }
+
+
+  // function watchCards() {
+  //   dbCards.limitToLast(1).on('child_added', addCardToList);
+  //   dbCards.limitToLast(1).on('child_changed', updateCard);
+  // }
+
+
+  function notificationAdded(notification) {
+    app.ports.notificationAdded.send(notification.val());
+  }
+
+
+  function notificationRemoved(notification) {
+    app.ports.notificationRemoved.send(notification.val());
+  }
+
+
+  var app = Elm.Main.fullscreen();
+  app.ports.windowResized.send({
+    width: window.innerWidth || document.documentElement.clientWidth,
+    height: window.innerHeight || document.documentElement.clientHeight
+  });
+
+
+  if (window.cities) {
+    var russianCityList = [];
+    var englishCityList = [];
+    for (var key in window.cities) {
+      russianCityList.push(window.cities[key]);
+      englishCityList.push(key);
+    }
+
+    app.ports.cityListChanged.send(JSON.stringify(window.cities));
+    // app.ports.cityListChanged.send({english: englishCityList, russian: russianCityList});
+  }
+
+
+  function cityRuToEn(ruCityName) {
+    for (var key in window.cities) {
+      if (ruCityName === window.cities[key]) {
+        return key;
+      }
+    }
+  }
+
+
+  var CURRENT_USER;
+
+  // Identify myself
+  fetch('loggedIn', {credentials: 'include'})
+    .then(function(response) {
+      response.json()
+        .then(function(user) {
+          if (user && !user.error) {
+
+            CURRENT_USER = db.toApp.user(user);
+            app.ports.authStateChanged.send(CURRENT_USER);
+
+            if (CURRENT_USER.city) {
+              feed(CURRENT_USER.city);
+            }
+          }
+        })
+        .catch(function(error) { console.error('error parsing json during Identifying myself, from [loggedIn] response', error); });
+    })
+    .catch(function(error) { console.error('error fetching [/loggedIn] during Identifying myself', error); });
+
+
+  app.ports.login.subscribe(function(authType) {
+    fetch('https://besokind.ru/auth/vkontakte')
+      .then(function(user) {
+        console.log('\n\nuser', typeof user, user, '\n\n');
+      })
+      .catch(function(error) {
+        console.error('\n\nerror', typeof error, error, '\n\n');
+      });
+  });
+
+
+  app.ports.logout.subscribe(function() {
+    // TODO presence off
+    app.ports.authStateChanged.send({
+      uid: '',
+      name: '',
+      email: '',
+      photoURL: '',
+      city: '',
+      karma: 0,
+      moderator: false
+    });
+  });
+
+
+  // Город приходит на русском. В приложении есть только русский список
+  // port setCity : { userId : String, city : String } -> Cmd msg
+  app.ports.setCity.subscribe(function(o) {
+    if (!o.userId) return;
+
+    var enCity = cityRuToEn(o.city);
+    console.log('\n\nenCity', typeof enCity, enCity, '\n\n');
+    updateUserCity(enCity);
+  });
+
+
+  // TODO implement watch cards and get cards for infinite scroll
+  // app.ports.fetchStreamCards.subscribe(getCards);
+  // app.ports.watchStreamCards.subscribe(watchCards);
+
+
+  app.ports.fetchCard.subscribe(function(id) {
+    // TODO get card
+    // card.creationTimeFriendly = dateFnsDistanceInWords(card.creationTime);
+    // app.ports.cardFetched.send(card);
+  });
+
+
+  /*
+    port fetchCardVolunteers : String -> Cmd msg
+  */
+  app.ports.fetchCardVolunteers.subscribe(function(id) {
+    // TODO get card volunteers
+    // app.ports.cardVolunteersFetched.send(volunteers);
+  });
+
+
+  app.ports.fetchUserCards.subscribe(function(id) {
+    // TODO get user cards
+    // app.ports.userCardsFetched.send(cards);
+  });
+
+  app.ports.createCard.subscribe(function(card) {
+    if (card.city) {
+      var firstCharCode = card.city.charCodeAt(0);
+      // 65 == A, 122 === z
+      if (firstCharCode < 65 || firstCharCode > 122) {
+        for (var transliteratedCity in window.cities) {
+          if (card.city === window.cities[transliteratedCity]) {
+            break;
+          }
+        }
+        card.city = transliteratedCity;
+      }
+    }
+
+    card.creationTime = +new Date();
+    card.creationTimeFriendly = dateFnsDistanceInWords(card.creationTime);
+
+    console.log('\n\ncreating card', typeof card, card, '\n\n');
+
+    fetch('/createCard?' + getQueryParams(card), {credentials: 'include'})
+      .then(function(res) {
+        console.log('Card successfully created', res);
+      })
+      .catch(function(error) {
+        console.error('Error during [creating card]:', error);
+      });
+  });
+
+
+  /*
+    port fetchUser : { id: String, purpose: String } -> Cmd msg
+      o.purpose "openUserPage" | "openChatPage"
+  */
+  app.ports.fetchUser.subscribe(fetchUser);
+
+
+  function fetchUser(o) {
+    // TODO get user
+    console.log('[fetchUser] not implemented yet')
+    switch (o.purpose) {
+      case 'openUserPage':
+        app.ports.activeUserFetched.send(userInDb);
+        break;
+      case 'openChatPage':
+      case 'openCardPage':
+        app.ports.userFetched.send(userInDb);
+        break;
+    }
+  }
+
+
+  /*
+    port fetchUserTakenCards : String -> Cmd msg
+  */
+  app.ports.fetchUserTakenCards.subscribe(function(userId) {
+    // TODO getch user taken cards
+    // foreach card
+    // card.creationTimeFriendly = dateFnsDistanceInWords(card.creationTime);
+    // app.ports.userTakenCardsFetched.send(cards);
+  });
+
+
+  /*
+    port updateKarma : {authorId : String, cardId : String, karma : Int} -> Cmd msg
+  */
+  app.ports.updateKarma.subscribe(function(o) {
+    // TODO update card karma price
+    // card.karma = o.karma;
+    // if (card.status === 0) {
+    //   card.status = 1;
+    // }
+  });
+
+  /*
+    port takeCard : { user : User, card : Card } -> Cmd msg
+  */
+  app.ports.takeCard.subscribe(function(o) {
+    // TODO update volunteer, card and send notification to card author
+    // app.ports.cardVolunteersFetched.send(volunteers);
+  });
+
+
+  /*
+    port removeCard : Card -> Cmd msg
+  */
+  app.ports.removeCard.subscribe(function(card) {
+    // TODO remove card, remove volunteers from this card, remove card from user taken
+    // app.ports.cardRemoved.send(card);
+  });
+
+
+  /*
+    port assignVolunteer : { card : Card, user : User, userName : String } -> Cmd msg
+  */
+  app.ports.assignVolunteer.subscribe(function(o) {
+    // TODO assign volu
+    // update card assignedTo, assignedAt
+    // createRoom(o.card.id, o.card.authorId, o.user.uid, o.userName);
+    // createRoom(o.card.id, o.card.authorId, o.user.uid, o.userName);
+  });
+
+
+  app.ports.confirmHelp.subscribe(function(card) {
+    // TODO confirm help
+    // card status = 2;
+    // update user karma (card.assignedTo)
+    // create notifications for each volunteer
+    // update card in application
+    // app.ports.updateCard.send(snap.val());
+  });
+
+
+  /*
+    port markNotificationsAsRead : { userId : String, notificationIdList : List String } -> Cmd msg
+  */
+  app.ports.markNotificationsAsRead.subscribe(function(o) {
+    // TODO mark notif as read
+  });
+
+
+  app.ports.persistCardText.subscribe(function(cardText) {
+    if (!window.localStorage) return;
+    localStorage.setItem('cardText', cardText);
+  });
+
+
+  if (window.localStorage) {
+    var cardText = localStorage.getItem('cardText');
+    if (cardText) {
+      app.ports.cardTextFetched.send(cardText);
+    }
+  }
+
+
+  // TODO watch users online and send this info to app
+  // app.ports.onlineUserAdded.send(snapshot.key);
+  // app.ports.onlineUserRemoved.send(snapshot.key);
+
+
+  // CHAT
+
+  app.ports.fetchChatMessages.subscribe(fetchChatMessages);
+
+  // port fetchChatMessages : { chatId : String, lastMessageId : String } -> Cmd msg
+  function fetchChatMessages(o) {
+    var chatId = o.chatId;
+    var lastMessageId = o.lastMessageId;
+    var pageSize = 12;
+    var ref = database
+      .ref('room-messages/' + chatId)
+      .limitToLast(pageSize);
+    var needToRemoveLast = false;
+
+    if (lastMessageId) {
+      needToRemoveLast = true;
+      ref = ref.endAt(null, lastMessageId)
+    }
+
+    ref.once('value', function(snap) {
+      var messages = [];
+
+      snap.forEach(function(im) {
+        messages.push(im.val());
+      });
+
+      if (needToRemoveLast) {
+        // убираем последнее, т.к. использовался lastMessageId и это сообщение у нас уже есть
+        messages.pop();
+      }
+
+      app.ports.chatMessagesFetched.send({chatId: chatId, messages: messages});
+    });
+  }
+
+
+  function createRoom(roomId, authorId, volunteerId, cardAuthorName) {
+    var roomExists = false;
+
+    var updates = {};
+    updates['room-metadata/' + roomId + '/users/' + authorId] = true;
+    updates['room-metadata/' + roomId + '/users/' + volunteerId] = true;
+    updates['user-rooms/' + authorId + '/' + roomId] = true;
+    updates['user-rooms/' + volunteerId + '/' + roomId] = true;
+    var volunteerNotificationId = database.ref('user-notifications/' + volunteerId).push().key;
+    updates['user-notifications/' + volunteerId + '/' + volunteerNotificationId] = {
+      id: volunteerNotificationId,
+      name: 'userAssignedToCard',
+      read: false,
+      cardId: roomId,
+      userId: volunteerId,
+      cardAuthorId: authorId,
+      userName: cardAuthorName
+    };
+
+    database.ref()
+      .update(updates)
+      .then(function() {
+        
+      })
+      .catch(function(error) {
+        console.error('## error during [creating room]:', roomId, 'for users:', authorId, volunteerId, error);
+      });
+  }
+
+
+  // var watchingChatId;
+  // app.ports.watchChatMessages.subscribe(function(chatId) {
+  //   if (watchingChatId && watchingChatId !== chatId) {
+  //     database.ref('room-messages/' + watchingChatId).off();
+  //   }
+  //   // TODO (salnikov): даже после unwatch все равно надо фильтровать от дубликатов
+  //   watchingChatId = chatId;
+  //   database.ref('room-messages/' + chatId).limitToLast(12).on('child_added', function(im) {
+  //     app.ports.messageAdded.send({chatId: chatId, im: im.val()});
+  //   });
+  // });
+  // app.ports.unwatchChatMessages.subscribe(function(chatId) {
+  //   database.ref('room-messages/' + chatId).off();
+  // });
+
+  app.ports.sendMessage.subscribe(function(chatMessage) {
+    var roomRef = database.ref('room-messages/' + chatMessage.chatId);
+    var key = roomRef.push().key;
+    var updates = {};
+    var im = chatMessage.im;
+    im.id = key;
+    im.date = firebase.database.ServerValue.TIMESTAMP;
+    updates[key] = im;
+    roomRef.update(updates)
+      .catch(function(error) {
+        console.error('## error during [sending message]:', chatMessage, error);
+      });
+  });
+
+  app.ports.fetchRoomMetadata.subscribe(function(roomId) {
+    database.ref('room-metadata/' + roomId)
+      .once('value', function(snapshot) {
+        var data = snapshot.val();
+        var roomMetadata = {
+          id: roomId,
+          users: Object.keys(data.users)
+        };
+        app.ports.roomMetadataFetched.send(roomMetadata);
+      });
+  });
+
+
+  /*
+    DOM
+  */
+
+  app.ports.focusElement.subscribe(function(elementId) {
+    requestAnimationFrame(function() {
+      var el = document.getElementById(elementId);
+      if (el) {
+        el.focus();
+      }
+    });
+  });
+
+
+  // id of DOMNode; count of children should be when scroll to fire
+  // port scrollElementToEnd : { elementId : String, count : Int } -> Cmd msg
+  app.ports.scrollElementToEnd.subscribe(function(o) {
+    // все действа с домом делать нужно после отрисовки
+    requestAnimationFrame(function() {
+      var el = document.getElementById(o.elementId);
+      if (el) {
+        hasEnoughChildrenByCount(el, o.count, function() {
+          el.scrollTop = el.scrollHeight;
+        });
+      }
+    });
+  });
+
+
+  window.onresize = function() {
+    if (app === undefined) return;
+    app.ports.windowResized.send({
+      width: window.innerWidth || document.documentElement.clientWidth,
+      height: window.innerHeight || document.documentElement.clientHeight
+    });
+  };
+
+
+  // port enableCardStreamInfiniteScroll : { elementId : String, lastCardId : String } -> Cmd msg
+  app.ports.enableCardStreamInfiniteScroll.subscribe(function(o) {
+    var el = document.getElementById(o.elementId);
+    if (!el) return;
+    hasEnoughChildrenByHeight(el, 400, function() {
+      function onScroll() {
+        if (el.scrollHeight - el.offsetHeight - el.scrollTop < 100) {
+          console.log('o.lastCardId', typeof o.lastCardId, o.lastCardId);
+          getCards(o.lastCardId);
+          el.removeEventListener('scroll', onScroll);
+        }
+      }
+
+      el.addEventListener('scroll', onScroll);
+    });
+  });
+
+
+  // port enableChatHistoryInfiniteScroll : { elementId : String, chatId : String, lastMessageId : String } -> Cmd msg
+  app.ports.enableChatHistoryInfiniteScroll.subscribe(function(o) {
+    requestAnimationFrame(function() {
+      var el = document.getElementById(o.elementId);
+      if (el) {
+        hasEnoughChildrenByCount(el, 12, function() {
+          // timeout нужен для того, чтобы подписаться после того, как мы доскролим до конца
+          setTimeout(function() {
+            var thirdChild = el.children[2];
+            if (thirdChild) {
+
+              function onScroll() {
+                // if (isElementInViewport(thirdChild)) {
+                if (el.scrollTop < 100) {
+                  fetchChatMessages(o);
+                  preserveScroll(el);
+                  el.removeEventListener('scroll', onScroll);
+                }
+              }
+
+              el.addEventListener('scroll', onScroll);
+            }
+          }, 500)
+        });
+      }
+    });
+  });
+
+
+  function preserveScroll(el, callback) {
+    var lastScrollHeight = el.scrollHeight;
+    var started = false;
+
+    function checkHeight() {
+      if (el.scrollHeight > lastScrollHeight) {
+        started = true;
+        requestAnimationFrame(checkHeight);
+        el.scrollTop = el.scrollTop + (el.scrollHeight - lastScrollHeight);
+
+        lastScrollHeight = el.scrollHeight;
+      } else {
+        if (started) {
+          if (callback) callback();
+        } else {
+          requestAnimationFrame(checkHeight);
+        }
+      }
+    }
+
+    requestAnimationFrame(checkHeight);
+  }
+
+
+  function hasEnoughChildrenByCount(el, childCount, callback) {
+    hasEnoughChildren(
+      el,
+      function() { return el.children.length === childCount; },
+      callback
+    );
+  }
+
+
+  function hasEnoughChildrenByHeight(el, height, callback) {
+    hasEnoughChildren(
+      el,
+      function() { return el.offsetHeight > height; },
+      callback
+    );
+  }
+
+
+  function hasEnoughChildren(el, condition, callback) {
+    function onChildAdded() {
+      if (condition()) {
+        callback();
+        el.removeEventListener('DOMNodeInserted', onChildAdded);
+      }
+    }
+
+    // детей столько же, случай при переносе строки в инпуте, надо чтоб высота инпута обновилась
+    if (condition()) {
+        callback();
+    } else {
+      // детей меньше, случай при открытии страницы, когда не все дети еще добавились в дом
+      el.addEventListener('DOMNodeInserted', onChildAdded);
+    }
+  }
+
+
+  function isElementInViewport(el) {
+      var rect = el.getBoundingClientRect();
+
+      return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      );
+  }
+
+
+  window.addEventListener('click', function() {
+    app.ports.clickedSomewhere.send('');
+  });
+  window.addEventListener('keydown', function(e) {
+    if (e.keyCode === 27) {
+      app.ports.escPressed.send('');
+    }
+  });
+
+
+  // GEOLOCATION
+
+  /*
+    1. Get city name by IP
+    2. Get lon lat by IP -> get city name by lon lat
+    3. Get lon lat by browser Geolocation API -> get city name by lon lat
+
+    `http://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&sensor=false`
+    http://maps.google.com/maps/api/geocode/json?latlng=52.03333,113.55&sensor=false
+  */
+
+  var DETECTED_CITY = "";
+
+  function cityEnToRu(cityEn) {
+    return window.cities[cityEn] || cityEn;
+  }
+
+  function detectCity() {
+    fetch('https://besokind.ru/city')
+      .then(function(response) {
+        response.json().then(function(responseJson) {
+          DETECTED_CITY = responseJson.data.city;
+
+          if (CURRENT_USER && CURRENT_USER.city !== DETECTED_CITY) {
+            if (CURRENT_USER.city) {
+              var oldCity = cityEnToRu(CURRENT_USER.city);
+              var newCity = cityEnToRu(DETECTED_CITY);
+              var change = confirm("Хотите сменить ваш город " + oldCity + " на " + newCity + "?");
+              if (change) {
+                updateUserCity(DETECTED_CITY);
+              }
+            } else {
+              updateUserCity(DETECTED_CITY);
+            }
+          }
+        });
+      })
+      .catch(function(error) {
+        console.log('## error during detecting city', error);
+      })
+  }
+
+
+  function updateUserCity(city) {
+    CURRENT_USER.city = city;
+    dbUpdateUserCity(CURRENT_USER.uid, city);
+    app.ports.authStateChanged.send(CURRENT_USER);
+    // TODO: show preloader
+
+    feed(city);
+  }
+
+
+  function dbUpdateUserCity(uid, city) {
+    var params = {
+      id: uid,
+      city: city
+    };
+    fetch('setUserCity?' + getQueryParams(params), {credentials: 'include'})
+      .then(function(response) { })
+      .catch(function(error) { console.error('Error updating user city [setCity]', error) });
+  }
+
+  detectCity();
+
+
+
+  function getQueryParams(params) {
+    return Object.keys(params)
+      .map(function(k) { return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]) })
+      .join('&');
+  }
+  
+
+
+  // ----- administrative functions
+
+  // -- CARD
+
+  // function _updateCard(fieldName, fieldValue) {
+  //   var updates = {};
+
+  //   function handleCard(card) {
+  //     updates['cards/' + card.id + '/' + fieldName] = fieldValue;
+  //   }
+
+  //   database.ref('cards').once('value', function(snap) {
+  //     snap.forEach(function(snapItem) {
+  //       handleCard(snapItem.val());
+  //     });
+
+  //     finish();
+  //   });
+
+  //   function finish() {
+  //     database.ref()
+  //       .update(updates)
+  //       .then(function() {
+  //         console.info('## succesfully [_updateCard]');
+  //       })
+  //       .catch(function(error) {
+  //         console.error('## error during [_updateCard]:', fieldName, error);
+  //       });
+  //   }
+  // }
+
+  // -- USER
+
+  // function _updateUser(fieldName, fieldValue) {
+  //   var updates = {};
+
+  //   var ready = 2;
+
+  //   function handleCardVolunteer(cardId, user) {
+  //     updates['card-volunteers/' + cardId + '/' + user.uid + '/' + fieldName] = fieldValue;
+  //   }
+
+  //   function handleUser(user) {
+  //     updates['users/' + user.uid + '/' + fieldName] = fieldValue;
+  //   }
+
+  //   database.ref('card-volunteers').once('value', function(snap) {
+  //     snap.forEach(function(record) {
+  //       var rec = record.val();
+  //       var cardId = record.key;
+  //       for (var userId in rec) {
+  //         handleCardVolunteer(cardId, rec[userId]);
+  //       }
+  //     });
+  //     ready--;
+  //     if (ready === 0) {
+  //       finish();
+  //     }
+  //   });
+
+  //   database.ref('users').once('value', function(snap) {
+  //     snap.forEach(function(snapItem) {
+  //       handleUser(snapItem.val());
+  //     });
+  //     ready--;
+  //     if (ready === 0) {
+  //       finish();
+  //     }
+  //   });
+
+  //   function finish() {
+  //     database.ref()
+  //       .update(updates)
+  //       .then(function() {
+  //         console.info('## succesfully [_updateUser]');
+  //       })
+  //       .catch(function(error) {
+  //         console.error('## error during [_updateUser]:', fieldName, error);
+  //       });
+  //   }
+  // }
+</script>
+</html>

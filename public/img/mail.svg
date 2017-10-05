@@ -1,0 +1,52 @@
+<svg width="36" height="36" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>mail.svg</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-62 -1034)">
+<g id="mail">
+<g id="Rectangle 5">
+<use xlink:href="#path0_fill" transform="translate(62 1034)" fill="#F2994A"/>
+</g>
+<g id="Rectangle 6">
+<use xlink:href="#path1_fill" transform="translate(64 1043)" fill="#FFFFFF"/>
+</g>
+<g id="Vector 3">
+<use xlink:href="#path2_fill" transform="translate(65 1044.5)" fill="#EEEEEE"/>
+</g>
+<g id="Vector 5">
+<use xlink:href="#path3_fill" transform="translate(81.5 1044.5)" fill="#EEEEEE"/>
+</g>
+<g id="Vector 4">
+<use xlink:href="#path4_fill" transform="translate(66.5 1050.5)" fill="#EEEEEE"/>
+</g>
+<g id="Vector 2">
+<use xlink:href="#path5_stroke" transform="translate(65 1050)" fill="#DDDDDD"/>
+</g>
+<g id="Vector 5">
+<use xlink:href="#path6_fill" transform="translate(65.5 1043)" fill="#FFFFFF"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path7_stroke" transform="translate(64.5 1043.5)" fill="#CCCCCC"/>
+</g>
+<g id="Rectangle 6">
+<mask id="mask0_outline_ins">
+<use xlink:href="#path8_fill" fill="white" transform="translate(64 1042)"/>
+</mask>
+<g mask="url(#mask0_outline_ins)">
+<use xlink:href="#path9_stroke_2x" transform="translate(64 1042)" fill="#F2994A"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 0 0L 36 0L 36 36L 0 36L 0 0Z"/>
+<path id="path1_fill" d="M 0 2C 0 0.895431 0.895431 0 2 0L 30 0C 31.1046 0 32 0.895431 32 2L 32 16C 32 17.1046 31.1046 18 30 18L 2 18C 0.895431 18 0 17.1046 0 16L 0 2Z"/>
+<path id="path2_fill" d="M 12.5 6.5L 0 0L 0 15L 12.5 6.5Z"/>
+<path id="path3_fill" d="M 0 6.5L 13.5 0L 13.5 14.5L 0 6.5Z"/>
+<path id="path4_fill" d="M 13.5 0L 0 9.5L 27.5 9.5L 13.5 0Z"/>
+<path id="path5_stroke" d="M 15 0L 15.5547 -0.83205L 15 -1.20185L 14.4453 -0.83205L 15 0ZM 0.5547 10.8321L 15.5547 0.83205L 14.4453 -0.83205L -0.5547 9.16795L 0.5547 10.8321ZM 14.4453 0.83205L 29.4453 10.8321L 30.5547 9.16795L 15.5547 -0.83205L 14.4453 0.83205Z"/>
+<path id="path6_fill" d="M 14.5 11L 0 0L 29 0L 14.5 11Z"/>
+<path id="path7_stroke" d="M 15.5 11.5L 14.9042 12.3031L 15.5 12.7452L 16.0958 12.3031L 15.5 11.5ZM -0.595847 0.803098L 14.9042 12.3031L 16.0958 10.6969L 0.595847 -0.803098L -0.595847 0.803098ZM 16.0958 12.3031L 31.5958 0.803098L 30.4042 -0.803098L 14.9042 10.6969L 16.0958 12.3031Z"/>
+<path id="path8_fill" d="M 0 2C 0 0.895431 0.895431 0 2 0L 30 0C 31.1046 0 32 0.895431 32 2L 32 17C 32 18.1046 31.1046 19 30 19L 2 19C 0.895431 19 0 18.1046 0 17L 0 2Z"/>
+<path id="path9_stroke_2x" d="M 2 1L 30 1L 30 -1L 2 -1L 2 1ZM 31 2L 31 17L 33 17L 33 2L 31 2ZM 30 18L 2 18L 2 20L 30 20L 30 18ZM 1 17L 1 2L -1 2L -1 17L 1 17ZM 2 -1C 0.343146 -1 -1 0.343146 -1 2L 1 2C 1 1.44772 1.44772 1 2 1L 2 -1ZM 30 1C 30.5523 1 31 1.44772 31 2L 33 2C 33 0.343146 31.6569 -1 30 -1L 30 1ZM 31 17C 31 17.5523 30.5523 18 30 18L 30 20C 31.6569 20 33 18.6569 33 17L 31 17ZM 2 18C 1.44772 18 1 17.5523 1 17L -1 17C -1 18.6569 0.343146 20 2 20L 2 18Z"/>
+</defs>
+</svg>

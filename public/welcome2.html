@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Будь Добр</title>
+	<meta name='description' content='Здесь люди помогают друг другу и получают за это кармапоинты, а организации предоставляют свои услуги за кармапоинты'>
+	<meta name="Keywords" content="Добро, помощь, карма, благотворительность">
+
+	<meta property='og:title' content='Будь Добр'>
+	<meta property='og:description' content='Дружище, здесь ты можешь попросить о помощи или помочь кому-то'>
+	<meta property='og:image' content='https://besokind.ru/img/besokind_wide.png'>
+	<meta property='og:url' content='https://besokind.ru'>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="img/favicon.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="img/favicon.png">
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	<style type="text/css">
+		* {
+			margin: 0;
+		}
+		body {
+			font-family: Ubuntu, Helvetica, sans-serif;
+			font-size: 18px;
+		}
+		#app {
+			width: 640px;
+			/*background: #f9f9f9;*/
+			height: 100vh;
+			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
+		}
+		#header {
+			background: #f9f9f9;
+			border-bottom: 1px solid #e9e9e9;
+			height: 88px;
+			width: 100%;
+			position: fixed;
+			left: 0;
+		}
+		#history {
+			margin-top: 88px;
+		}
+		#input {
+			background: #f9f9f9;
+			border-top: 1px solid #e9e9e9;
+			height: 88px;
+			width: 100%;
+			position: fixed;
+			left: 0;
+			bottom: 0;
+		}
+			.input-wrap {
+				max-width: 640px;
+				margin: 0 auto;
+			}
+				.input-field {
+					border: 1px solid #e9e9e9;
+					border-radius: 5px;
+					margin-top: 25px;
+					padding: 10px;
+					width: 540px;
+					font-family: Ubuntu, Helvetica, sans-serif;
+					font-size: 18px;
+				}
+				.send {
+					border-radius: 5px;
+					background: #2488fc;
+					color: white;
+					display: inline-block;
+					padding: 10px;
+					cursor: pointer;
+				}
+
+		.message-wrap {
+			margin: 10px;
+		}
+		.message {
+			position: relative;
+			border-radius: 18px;
+			background: #e7e7eb;
+			color: black;
+			padding: 12px;
+			display: inline-block;
+		}
+			.message .tail {
+				position: absolute;
+				bottom: 0;
+				width: 18px;
+				height: 16px;
+				overflow: hidden;
+
+				left: -9px;
+			}
+				.message .tail-base {
+					background: #e7e7eb;
+					border-radius: 100%;
+					position: absolute;
+					bottom: 0;
+					width: 36px;
+					height: 36px;
+
+					left: -18px;
+				}
+				.message .tail-eclipse {
+					background: #fff;
+					border-radius: 100%;
+					position: absolute;
+					bottom: 0;
+					width: 20px;
+					height: 27px;
+
+					left: -11px;
+				}
+
+		.message.guest {
+			background: #2488fc;
+			color: white;
+			float: right;
+		}
+			.message.guest .tail {
+				right: -9px;
+				left: initial;
+			}
+				.message.guest .tail-base {
+					background: #2488fc;
+					left: 0;
+				}
+				.message.guest .tail-eclipse {
+					right: -11px;
+					left: initial;
+				}
+	</style>
+<body>
+<div id='app'>
+	<div id='header'></div>
+	<div id='history'>
+		<div class='date'></div>
+		<div class='message-wrap'>
+			<div class='message'>
+				<div class='text'>Привет, давай знакомиться?</div>
+				<div class='tail'>
+					<div class='tail-base'></div>
+					<div class='tail-eclipse'></div>
+				</div>
+			</div>
+		</div>
+		<div class='message-wrap'>
+			<div class='message guest'>
+				<div class='text'>Привет, меня зовут Васька</div>
+				<div class='tail'>
+					<div class='tail-base'></div>
+					<div class='tail-eclipse'></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id='input'>
+		<div class='input-wrap'>
+			<input class='input-field' type="" name="" placeholder="Напишите ваше сообщение...">
+			<div class='send'>Отпр</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

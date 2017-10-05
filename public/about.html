@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Будь Добр</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="img/favicon.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="img/favicon.png">
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			font-family: Ubuntu, Helvetica, sans-serif;
+			font-size: 16px;
+		}
+
+		a {
+			text-decoration: none;
+			color: black;
+		}
+		p {
+			text-indent: 30px;
+		}
+		p.first {
+			text-indent: 0;
+		}
+		p.last {
+			padding-bottom: 25px;
+		}
+		h2 {
+			margin-bottom: 5px;
+			font-size: 26px;
+		}
+		ol {
+			margin: 5px 0 20px 50px;
+		}
+		[contenteditable=true]:empty:before{
+			content: attr(placeholder);
+			/*color: #aaa;*/
+		}
+		.mark {
+			background: rgba(242,153,74,0.2);
+		}
+		#header {
+			height: 15vh;
+			line-height: 15vh;
+			font-size: 5vh;
+			text-align: center;
+			background: #F2994A;
+			color: white;
+		}
+		#welcome {
+			margin: 0 auto;
+			width: 80%;
+			max-width: 700px;
+			display: flex;
+			flex-direction: column;
+		}
+			#welcome .phrase {
+				height: 100px;
+				line-height: 100px;
+				text-align: center;
+				color: #F2994A;
+				font-size: 22px;
+			}
+		#footer {
+			margin: 0 auto;
+			max-width: 700px;
+			width: 80%;
+		}
+		.grid__column-half {
+			width: 50%;
+		}
+		.grid__column-fourth {
+			width: 25%;
+		}
+		.grid__column-three {
+			width: 75%;
+		}
+
+		.buttons {
+			display: flex;
+			justify-content: space-around;
+			padding: 20px 0 80px 0;
+			-webkit-touch-callout: none; /* iOS Safari */
+		    -webkit-user-select: none; /* Safari */
+		     -khtml-user-select: none; /* Konqueror HTML */
+		       -moz-user-select: none; /* Firefox */
+		        -ms-user-select: none; /* Internet Explorer/Edge */
+		            user-select: none; /* Non-prefixed version, currently
+		                                  supported by Chrome and Opera */
+		}
+			.button {
+				display: table;
+				width: 25%;
+				height: 15vh;
+				border: 2px solid #F2994A;
+				border-radius: 10px;
+				transition: width 0.5s, height 0.5s, transform 0.3s;
+				cursor: pointer;
+			}
+				.button p {
+					display: table-cell;
+					vertical-align: middle;
+					text-align: center;
+					padding: 20px 20px;
+				}
+			.button:hover {
+				/*transform: scale(1.1);*/
+				background: #F2994A;
+				color: white;
+			}
+			.button._activated {
+				/*transform: scale(1.1);*/
+				background: #F2994A;
+				color: white;
+			}
+
+		.section-body {
+			padding-bottom: 50px;
+		}
+
+		#social-section {
+			display: flex;
+			align-items: center;
+		    text-align: center;
+		    height: 100px;
+		}
+			.social {
+				width: 48px;
+				height: 48px;
+				border-radius: 15px;
+				background: #F2994A;
+				color: white;
+				text-align: center;
+				line-height: 44px;
+				font-size: 30px;
+				cursor: pointer;
+				display: inline-block;
+				margin: 0 20px;
+				
+			}
+			.social span {
+				transition: transform 0.2s;
+			}
+			.social:hover span {
+				transform: scale(1.1);
+			}
+			.social__vk span {
+				display: inline-block;
+				vertical-align: middle;
+				width: 36px;
+				height: 36px;
+				background-image: url('img/vk.svg');
+				background-size: cover;
+			}
+			.social__email span {
+				display: inline-block;
+				vertical-align: middle;
+				width: 36px;
+				height: 36px;
+				background-image: url('img/mail.svg');
+				background-size: cover;
+			}
+			.social__telegram span {
+				display: inline-block;
+				vertical-align: middle;
+				width: 48px;
+				height: 48px;
+				background-image: url('img/telegram.svg');
+				background-size: cover;
+			}
+
+		@media all and (max-width: 700px) {
+			.grid__column-half {
+				width: 100%;
+			}
+			.grid__column-fourth {
+				width: 100%;
+			}
+			.grid__column-three {
+				width: 100%;
+			}
+			.buttons {
+				flex-direction: column;
+				align-items: center;
+				justify-content: space-around;
+			}
+				.button {
+					min-width: 50%;
+					max-width: 70%;
+					margin: 10px 0;
+				}
+		}
+	</style>
+</head>
+<body>
+	<div id='header'>Будь Добр</div>
+	<div id='welcome'>
+		<div class='phrase'>Привет</div>
+
+		<!-- <div class='grid__column-fourth'>a</div> -->
+		<!-- <div class='grid__column-half'> -->
+		<p class='first'>В твоем городе в августе запустится благотворительный интернет-сервис. И нет, это не про сборы денег на разные нужды, операции и так далее. Это о том как провести время с пользой для других, нуждающихся в тебе людей. При этом получать за это приятные вознаграждения.</p>
+		<p>А еще это о том, что не надо стесняться просить о помощи. Когда я спрашиваю людей, почему они помогают мне, часто они отвечают: <span class='mark'>«когда-то я был в твоей ситуации»</span>. Другие просто любят это ощущение, когда помогаешь, когда ты полезен. Поверь, в мире действительно много добрых людей.</p>
+		<p class='last'>Проект называется <strong>Будь Добр</strong> и мы хотим вдохновлять быть добрыми.</p>
+		<h2>Нужда встречает возможность</h2>
+		<p class='first last'>Этот проект — мост между тем кому нужна помощь и тем, кто готов на нее откликнуться. При этом свершающий добро получает за свои дела очки — кармапоинты, которые он может обменять на реальные вознаграждения: обеды в кафе, билеты в кино, скидки в магазинах и многое другое.</p>
+		<h2>Ты можешь помочь</h2>
+		<p class='first'>Если тебе нравится помогать людям, нравится идея этого проекта и ты хотел бы быть его частью, то это твой шанс встать у истоков нашего движения в твоем городе. Мы ищем людей, готовых помочь курировать этот проект в своем городе — тех, кто готов заниматься:</p>
+ 		<ol>
+ 			<li>модерацией дел</li>
+ 			<li>продвижением проекта</li>
+ 			<li>поиском партнеров</li>
+ 			<li>просто мотивировать людей просить о помощи и помогать</li>
+ 		</ol>
+ 		<!-- модерацией дел, продвижением проекта, поиском партнеров и просто мотивировать людей просить о помощи и помогать. -->
+		<p class='first last'>Или же мы можем просто познакомиться и рассказать тебе в числе первых о том, когда проект запустится.</p>
+		<!-- </div> -->
+		<!-- <div class='grid__column-fourth'>b</div> -->
+
+	</div>
+
+	<div id='footer'>
+		<div class='buttons'>
+			<a class='button' id='lets-meet' href='welcome.html?letsmeet'><p class='first'>Интересно, давай познакомимся</p></a>
+			<a class='button' id='help-organize' href='welcome.html?letsmeet&helpOrganize'><p class='first'>Уау! Хочу помочь с организацией</p></a>
+			<div id='social-section'>
+				<a class='social social__vk' href='https://vk.com/besokind' target="blank"><span></span></a>
+				<a class='social social__email' href='mailto:besokindproject@gmail.com' target="blank"><span></span></a>
+				<a class='social social__telegram' href='https://t.me/artartemev' target="blank"><span></span></a>
+			</div>
+		</div>
+	</div>
+
+	<script src='src/smoothscroll.js'></script>
+	<script>
+		function hasClass(el, className) {
+			var classes = el.className.split(' ');
+			for (var i = 0; i < classes.length; i++) {
+				if (classes[i] === className) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+
+		function addClass(el, className) {
+			var classes = el.className.split(' ');
+			for (var i = 0; i < classes.length; i++) {
+				if (classes[i] === className) {
+					return;
+				}
+			}
+			classes.push(className);
+			el.className = classes.join(' ');
+		}
+
+
+		function removeClass(el, className) {
+			// assume using our addClass, which excludes duplicate classes
+			var classes = el.className.split(' ');
+			for (var i = 0; i < classes.length; i++) {
+				if (classes[i] === className) {
+					break;
+				}
+			}
+			classes.splice(i, 1);
+			el.className = classes.join(' ');
+		}
+	</script>
+</body>
+</html>

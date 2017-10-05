@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Будь Добр</title>
+	<meta name='description' content='Здесь люди помогают друг другу и получают за это кармапоинты, а организации предоставляют свои услуги за кармапоинты'>
+	<meta name="Keywords" content="Добро, помощь, карма, благотворительность">
+
+	<meta property='og:title' content='Будь Добр'>
+	<meta property='og:description' content='Дружище, здесь ты можешь попросить о помощи или помочь кому-то'>
+	<meta property='og:image' content='https://besokind.ru/img/besokind_wide.png'>
+	<meta property='og:url' content='https://besokind.ru'>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="img/favicon.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="img/favicon.png">
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			font-family: Ubuntu, Helvetica, sans-serif;
+			font-size: 22px;
+		}
+		a {
+			text-decoration: none;
+			color: black;
+		}
+		section {
+			/*max-width: 700px;*/
+			/*margin: 0 auto;*/
+		}
+		[contenteditable=true]:empty:before{
+			content: attr(placeholder);
+			/*color: #aaa;*/
+		}
+		#app {
+			display: flex;
+			flex-direction: column;
+		}
+		#header {
+			height: 15vh;
+			line-height: 15vh;
+			font-size: 5vh;
+			text-align: center;
+			background: #F2994A;
+			color: white;
+		}
+		#welcome {
+
+		}
+			#welcome .phrase {
+				height: 20vh;
+				line-height: 20vh;
+				text-align: center;
+				color: #F2994A;
+			}
+		.no-select {
+			-webkit-touch-callout: none; /* iOS Safari */
+			-webkit-user-select: none; /* Safari */
+			 -khtml-user-select: none; /* Konqueror HTML */
+			   -moz-user-select: none; /* Firefox */
+				-ms-user-select: none; /* Internet Explorer/Edge */
+					user-select: none; /* Non-prefixed version, currently
+										  supported by Chrome and Opera */
+		}
+		.buttons {
+			display: flex;
+			justify-content: space-around;
+			/*height: 65vh;*/
+		}
+			.button {
+				display: table;
+				width: 25%;
+				height: 15vh;
+				border: 2px solid #F2994A;
+				border-radius: 10px;
+				transition: width 0.5s, height 0.5s, transform 0.3s;
+				cursor: pointer;
+			}
+				.button p {
+					display: table-cell;
+					vertical-align: middle;
+					text-align: center;
+					padding: 20px 20px;
+					border-radius: 10px;
+				}
+			.button:hover {
+				/*transform: scale(1.05);*/
+				background-color: #F2994A;
+				color: white;
+			}
+			.button._activated {
+				/*transform: scale(1.05);*/
+				background-color: #F2994A;
+				color: white;
+			}
+			/*#lets-meet:hover {
+				background-image: url('corky.gif');
+				background-size: cover;
+			}
+			#already-met:hover {
+				background-image: url('facepalm.gif');
+				background-size: cover;
+			}*/
+			#where-am-i:hover {
+				background-image: url('img/trvlt.gif');
+				background-size: cover;
+			}
+
+		.section-body {
+			padding-bottom: 50px;
+		}
+
+		#form {
+			/*height: 100vh;*/
+			width: 80%;
+			margin: 0 auto;
+			padding-top: 50px;
+		}
+			.input {
+				font-weight: bold;
+				display: inline-block;
+				border: 0;
+				outline: none;
+			}
+			.name-placeholder {
+				font-weight: bold;
+			}
+			.tag-list {
+				/*background: #fafafa;*/
+				transition: height 0.5s;
+				list-style: none;
+				padding: 10px;
+			}
+				.tag {
+					margin: 10px;
+				}
+					.tag-text {
+						display: inline-block;
+						border-radius: 5px;
+						background: #f1f1f1;
+						padding: 5px 10px;
+						cursor: pointer;
+					}
+					.tag-text:hover {
+						background: rgb(255, 227, 203);
+					}
+					.tag-text._selected {
+						background: #F2994A;
+						color: white;
+					}
+			#form__part2 {
+				/* чтобы скрыть своим телом список */
+				position: relative;
+				background: white;
+			}
+			.phone-wrap {
+				white-space: nowrap;
+			}
+				.plus-seven {
+					color: #aaa;
+					font-weight: bold;
+				}
+				.plus-seven.active {
+					color: black;
+				}
+
+
+		#telegram {
+			/*height: 100vh;*/
+			width: 80%;
+			margin: 0 auto;
+			padding-top: 50px;
+			background-color: white;
+		}
+
+		#thanks {
+			/*height: 100vh;*/
+			width: 80%;
+			margin: 0 auto;
+			padding-top: 50px;
+		}
+
+		#social-section {
+			margin: 0 auto;
+			text-align: center;
+			padding-bottom: 60px;
+		}
+			.social {
+				width: 48px;
+				height: 48px;
+				border-radius: 15px;
+				background: #F2994A;
+				color: white;
+				text-align: center;
+				line-height: 44px;
+				font-size: 30px;
+				cursor: pointer;
+				display: inline-block;
+			}
+			.social__email {
+				margin: 0 20px;
+			}
+			.social span {
+				transition: transform 0.2s;
+			}
+			.social:hover span {
+				transform: scale(1.1);
+			}
+			.social__vk span {
+				display: inline-block;
+				vertical-align: middle;
+				width: 36px;
+				height: 36px;
+				background-image: url('img/vk.svg');
+				background-size: cover;
+			}
+			.social__email span {
+				display: inline-block;
+				vertical-align: middle;
+				width: 36px;
+				height: 36px;
+				background-image: url('img/mail.svg');
+				background-size: cover;
+			}
+			.social__telegram span {
+				display: inline-block;
+				vertical-align: middle;
+				width: 48px;
+				height: 48px;
+				background-image: url('img/telegram.svg');
+				background-size: cover;
+			}
+
+		.selectbox-arrow {
+			display: inline-block;
+			width: 0;
+			height: 0;
+			margin: 0 5px;
+			border-left: 10px solid transparent;
+			border-right: 10px solid transparent;
+			border-top: 10px solid #F2994A;
+			transition: transform 0.2s;
+		}
+		/*.arrow-down {
+			width: 0;
+			height: 0;
+			border-left: 10px solid transparent;
+			border-right: 10px solid transparent;
+			border-top: 10px solid #F2994A;
+			position: relative;
+			top: 20px;
+		}*/
+
+		.arrow-right {
+			/*width: 0;
+			height: 0;
+			border-bottom: 10px solid transparent;
+			border-top: 10px solid transparent;
+			border-left: 10px solid #F2994A;
+			position: relative;
+			top: 20px;*/
+			transform: rotate(-90deg);
+		}
+
+		@media only screen and (min-width: 300px) and (max-width: 700px) {
+			.buttons {
+				flex-direction: column;
+				align-items: center;
+				justify-content: space-around;
+			}
+				.button {
+					min-width: 50%;
+					max-width: 70%;
+					margin: 10px 0;
+				}
+				#where-am-i {
+					background-image: url('img/trvlt.gif');
+					background-size: cover;
+					background-color: #F2994A;
+					color: white;
+				}
+		}
+
+		@media only screen and (min-width: 701px) {
+			#welcome {
+				height: 100vh;
+			}
+			#form {
+				height: 100vh;
+			}
+				#form__part2 {
+					height: 80vh;
+				}
+			#telegram {
+				height: 100vh;
+			}
+			#thanks {
+				height: 100vh;
+			}
+
+		
+	</style>
+</head>
+<body>
+	<div id='app'>
+		<div id='header'>Здравствуй, друг</div>
+		<section id='welcome'>
+			<div class='phrase'>Давай знакомиться?</div>
+			<div class='buttons no-select'>
+				<div class='button' id='lets-meet'><p>Давай</p></div>
+				<!-- <div class='button' id='already-met'><p>Так мы же уже знакомы</p></div> -->
+				<a class='button' id='where-am-i' href='about.html'><p>А где я вообще?</p></a>
+			</div>
+		</section>
+		<section id='form'>
+			<div id='form__part1'>
+				<p>Меня зовут <span class='input' id='name' contenteditable='true' placeholder='_____'></span>, мне <span class='input' id='age' contenteditable='true' placeholder='___'></span> <span id='age-suffix'>лет</span> и мой город — <span class='input' id='city' contenteditable='true' placeholder='_______'></span>. Мне очень понравился ваш проект и я бы хотел принять в нем участие. Я хочу помогать:</p>
+			</div>
+			<div id='form__part2'>
+				<p class='section-body'>Так что пишите мне на почту <span class='input' id='email' contenteditable='true' placeholder='______' type='email'></span> и вот мой номер телефона <span class='phone-wrap'><span class='plus-seven'>+7 </span><input class='input' id='phone' contenteditable='true' placeholder='хххххххххх' type='tel' maxlength="10"></input></p>
+				<div class='buttons no-select'>
+					<div class='button' id='no-telegram'><p>Держите меня в курсе</p></div>
+					<div class='button' id='yes-telegram'><p>Кстати, я использую Telegram</p></div>
+				</div>
+			</div>
+		</section>
+		<section id='thanks'>
+			<p>Слушай, <span class='name-placeholder'>друг</span>, я действительно рад, что ты ко мне заглянул, что мы так славно познакомились. Я буду держать тебя в курсе наших событий. Обещаю не быть навязчивым и сообщать только о важном.</p>
+			<p class='section-body'>Когда запустится сайт (сейчас я делаю всё для того, чтобы это случилось в июле — августе 2017), я тебе напишу письмо, а ты обязательно приходи в гости. Чувствуй себя как дома, потыкай кнопочки, посоздавай дела, помоги кому-нибудь — в общем делай всё, что хочешь, я тебе доверяю. Если появятся какие-то вопросы, то пиши. Вот наши ссылки вконтакте, наша почта и Telegram.</p>
+			<div id='social-section'>
+				<a class='social social__vk' href='https://vk.com/besokind' target="blank"><span></span></a>
+				<a class='social social__email' href='mailto:besokindproject@gmail.com' target="blank"><span></span></a>
+				<a class='social social__telegram' href='https://t.me/artartemev' target="blank"><span></span></a>
+			</div>
+		</section>
+	</div>
+
+	<script src='src/smoothscroll.js'></script>
+	<script src='src/fetch.js'></script>
+	<script src='src/cities.js'></script>
+	<!-- AMPLITUDE -->
+	<script>
+  (function(e,t){var n=e.amplitude||{_q:[],_iq:{}};var r=t.createElement("script");r.type="text/javascript";
+  r.async=true;r.src="https://d24n15hnbwhuhn.cloudfront.net/libs/amplitude-3.4.0-min.gz.js";
+  r.onload=function(){e.amplitude.runQueuedFunctions()};var i=t.getElementsByTagName("script")[0];
+  i.parentNode.insertBefore(r,i);function s(e,t){e.prototype[t]=function(){this._q.push([t].concat(Array.prototype.slice.call(arguments,0)));
+  return this}}var o=function(){this._q=[];return this};var a=["add","append","clearAll","prepend","set","setOnce","unset"];
+  for(var u=0;u<a.length;u++){s(o,a[u])}n.Identify=o;var c=function(){this._q=[];return this;
+  };var p=["setProductId","setQuantity","setPrice","setRevenueType","setEventProperties"];
+  for(var l=0;l<p.length;l++){s(c,p[l])}n.Revenue=c;var d=["init","logEvent","logRevenue","setUserId","setUserProperties","setOptOut","setVersionName","setDomain","setDeviceId","setGlobalUserProperties","identify","clearUserProperties","setGroup","logRevenueV2","regenerateDeviceId","logEventWithTimestamp","logEventWithGroups"];
+  function v(e){function t(t){e[t]=function(){e._q.push([t].concat(Array.prototype.slice.call(arguments,0)));
+  }}for(var n=0;n<d.length;n++){t(d[n])}}v(n);n.getInstance=function(e){e=(!e||e.length===0?"$default_instance":e).toLowerCase();
+  if(!n._iq.hasOwnProperty(e)){n._iq[e]={_q:[]};v(n._iq[e])}return n._iq[e]};e.amplitude=n;
+  })(window,document);
+
+  amplitude.getInstance().init("7930b902daeb60a4d1aba31231821255");
+	</script>
+
+	<!-- <script src='citiesCatalog.js'></script> -->
+	<script>
+		/*
+			AMPLITUDE events:
+			1. VISIT, {city: string}
+			2. CLICK_LETS_MEET
+			3. CLICK_WHERE_AM_I
+			4. CLICK_SUBSCRIBE
+			5. CLICK_SOCIAL_VK
+			6. CLICK_SOCIAL_TELEGRAM
+		*/
+		console.log('Здравствуй, дружище! Если хочешь помочь, пиши мне drzhbe@gmail.com');
+
+
+		if (location.search.indexOf('letsmeet') !== -1) {
+			document.getElementById('form').scrollIntoView({behavior: 'smooth'});
+		}
+
+		var isMobile = window.screen.width < 701;
+
+		on('button', 'mousedown', function(element) {
+			addClass(element, '_activated');
+		});
+		on('button', 'mouseup', function(element) {
+			removeClass(element, '_activated');
+		});
+		on('button', 'mouseout', function(element) {
+			removeClass(element, '_activated');
+		});
+
+		var letsMeet = document.getElementById('lets-meet');
+		letsMeet.addEventListener('click', function(ev) {
+			ev.preventDefault();
+			amplitude.getInstance().logEvent("CLICK_LETS_MEET");
+			document.getElementById('form').scrollIntoView({behavior: 'smooth'});
+		});
+
+		var whereAmI = document.getElementById('where-am-i');
+		whereAmI.addEventListener('click', function(ev) {
+			amplitude.getInstance().logEvent("CLICK_WHERE_AM_I");
+			// continue following the link...
+		});
+
+		function subscribeUser(userData) {
+			amplitude.getInstance().logEvent("CLICK_SUBSCRIBE");
+
+			var tags = userData.tags
+				.map(function(val, i) { return i; })
+				.filter(function(val, i) {
+					return userData.tags[i];
+				});
+
+			console.log('\n\nuserData.telegram', typeof userData.telegram, userData.telegram, userData.helpOrganize, '\n\n');
+			// TODO polyfill `fetch`
+			fetch('https://besokind.ru/subscribe?email='+userData.email+'&name='+userData.name+'&city='+userData.city+'&age='+userData.age+'&phone='+userData.phone+'&helpOrganize='+(+userData.helpOrganize)+'&telegram='+(+userData.telegram)+'&tags='+JSON.stringify(tags))
+				.then(function(res) {
+					console.log('\n\nres', res, '\n\n');
+					console.log('\n\nres.json() ::::', res.json(), '\n\n');
+				})
+				.catch(function(res) {
+					console.log('\n\nres error:', res, '\n\n');
+				});
+		}
+
+		var yesTelegram = document.getElementById('yes-telegram');
+		yesTelegram.addEventListener('click', function(ev) {
+			ev.preventDefault();
+			userData.telegram = true;
+
+			subscribeUser(userData);
+			document.getElementById('thanks').scrollIntoView({behavior: 'smooth'});
+		});
+
+		var noTelegram = document.getElementById('no-telegram');
+		noTelegram.addEventListener('click', function(ev) {
+			ev.preventDefault();
+			userData.telegram = false;
+
+			subscribeUser(userData);
+			document.getElementById('thanks').scrollIntoView({behavior: 'smooth'});
+		});
+
+		var phoneInput = document.getElementById('phone');
+		var plusSeven = document.querySelector('.plus-seven');
+		phoneInput.addEventListener('focus', function(ev) {
+			addClass(plusSeven, 'active');
+		});
+		phoneInput.addEventListener('blur', function(ev) {
+			if (userData.phone.length === 0) {
+				removeClass(plusSeven, 'active');
+			}
+		});
+
+		var thanks = document.getElementById('thanks');
+		var form = document.getElementById('form');
+		var formPart2 = document.getElementById('form__part2');
+		var selectboxArrow = document.querySelector('.selectbox-arrow');
+
+
+		var socialVk = document.querySelector('.social__vk');
+		socialVk.addEventListener('click', function(ev) {
+			amplitude.getInstance().logEvent("CLICK_SOCIAL_VK");
+			// continue following the link...
+		});
+
+		var socialTelegram = document.querySelector('.social__telegram');
+		socialTelegram.addEventListener('click', function(ev) {
+			amplitude.getInstance().logEvent("CLICK_SOCIAL_TELEGRAM");
+			// continue following the link...
+		});
+
+
+		/*
+			TAG LIST
+		*/
+		var tags = ["Животным", "Благотворительным организациям", "Пенсионерам", "Инвалидам", "Детям", "По уборке", "Вещами (дарение, на время)", "Знаниями (репетиторство)", "В ремонтных делах", "Мужской силой", "Машиной"];
+		var tagList = document.createElement('ul');
+		tagList.className = 'tag-list';
+		tags.forEach(function(tag, index) {
+			var li = document.createElement('li');
+			li.className = 'tag';
+			var tagText = document.createElement('span');
+			tagText.className = 'tag-text'
+			tagText.innerText = tag;
+			tagText.addEventListener('click', function(ev) {
+				userData.tags[index] = !userData.tags[index];
+				if (userData.tags[index]) {
+					addClass(tagText, '_selected');
+				} else {
+					removeClass(tagText, '_selected');
+				}
+			});
+			li.appendChild(tagText);
+			tagList.appendChild(li);
+		});
+		form.insertBefore(tagList, formPart2);
+
+		if (!isMobile) {
+			thanks.style.paddingTop = tagList.offsetHeight + 'px';
+		}
+
+		var userData = {
+			name: '',
+			age: '',
+			city: '',
+			tags: tags.map(function(tag) { return false; }),
+			email: '',
+			phone: '',
+			helpOrganize: location.search.indexOf('helpOrganize') !== -1,
+			telegram: false
+		};
+
+
+		var ageSuffix = document.getElementById('age-suffix');
+		var namePlaceholders = document.querySelectorAll('.name-placeholder');
+		var inputs = document.querySelectorAll('.input');
+		inputs.forEach(function(input) {
+			
+			input.addEventListener('input', function(ev) {
+				var val = ev.target.innerText.trim();
+				if (input.id === 'phone') {
+					console.log('\n\nval', typeof val, val, '\n\n');
+					val = '+7' + ev.target.value.trim();
+					console.log('\n\nval', typeof val, val, '\n\n');
+				}
+				if (input.id === 'age') {
+					val = +val;
+					ageSuffix.innerText = plural(val, 'год', 'года', 'лет');
+				}
+
+				userData[ev.target.id] = val;
+
+				if (input.id === 'name') {
+					var values = val.split(' ');
+					for (var i = 0; i < values.length; i++) {
+						if (cuteNames[values[i]]) {
+							val = cuteNames[values[i]];
+							break;
+						}
+					}
+					namePlaceholders.forEach(function(placeholder) {
+						placeholder.innerText = val;
+					});
+				}
+			});
+
+		});
+
+		function urlify(obj) {
+			return Object.keys(obj)
+				.map(function(key) {
+					return key + '=' + encodeURIComponent(obj[key]);
+				})
+				.join('&');
+		}
+
+		function plural(number, single, twoToFour, fiveToZero) {
+			number = +number;
+			var digit = number % 10;
+			if (number > 10 && number < 20) {
+				return fiveToZero;
+			} else if (digit === 1) {
+				return single;
+			} else if (digit < 5 && digit !== 0) {
+				return twoToFour;
+			} else {
+				return fiveToZero;
+			}
+		}
+
+		var cuteNames = {
+			'Анастасия': 'Настя',
+			'Анна': 'Аня',
+			'Артем': 'Тёма',
+			'Артём': 'Тёма',
+			'Алексей': 'Лёша',
+			'Александр': 'Саша',
+			'Александра': 'Саша',
+			'Валерий': 'Валера',
+			'Валерия': 'Лера',
+			'Василий': 'Вася',
+			'Владислав': 'Влад',
+			'Вячеслав': 'Слава',
+			'Евгений': 'Женя',
+			'Евгения': 'Женя',
+			'Елена': 'Лена',
+			'Екатерина': 'Катя',
+			'Галина': 'Галя',
+			'Дарья': 'Даша',
+			'Дмитрий': 'Дима',
+			'Иван': 'Ваня',
+			'Константин': 'Костя',
+			'Любовь': 'Люба',
+			'Леонид': 'Лёня',
+			'Мария': 'Маша',
+			'Михаил': 'Миша',
+			'Николай': 'Коля',
+			'Петр': 'Петя',
+			'Светлана': 'Света',
+			'Сергей': 'Серёжа',
+			'Станислав': 'Стас',
+			'Федор': 'Федя',
+			'Эдуард': 'Эдик',
+			'Ярослав': 'Ярик',
+			'Ярослава': 'Яся'
+		};
+
+
+		var CURRENT_CITY = "";
+
+		function detectCity() {
+			fetch('https://besokind.ru/city')
+				.then(function(response) {
+					response.json()
+						.then(function(responseJson) {
+							CURRENT_CITY = responseJson.data.city;
+
+							if (cities[CURRENT_CITY]) {
+								var cityElement = document.getElementById('city');
+								cityElement.innerText = cities[CURRENT_CITY];
+							}
+
+							amplitude.getInstance().logEvent("VISIT", {city: CURRENT_CITY});	
+						})
+						.catch(function(error) {
+							amplitude.getInstance().logEvent("VISIT", {city: 'NOT_DEFINED'});	
+						});
+				})
+				.catch(function(error) {
+					amplitude.getInstance().logEvent("VISIT", {city: 'NOT_DEFINED'});
+					console.log('## error during detecting city', error);
+				});
+		}
+
+		detectCity();
+
+
+		/*
+			DOM
+		*/
+
+		function on(className, eventName, callback) {
+			document.body.addEventListener(eventName, function(ev) {
+				var element = ev.target;
+				_check(element, className, callback);
+			});
+		}
+
+		function _check(element, className, callback) {
+			if (hasClass(element, className)) {
+				callback(element);
+			} else if (element.parentNode && element.parentNode !== document) {
+				_check(element.parentNode, className, callback);
+			}
+		}
+
+		function hasClass(el, className) {
+			var classes = el.className.split(' ');
+			for (var i = 0; i < classes.length; i++) {
+				if (classes[i] === className) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+
+		function addClass(el, className) {
+			var classes = el.className.split(' ');
+			for (var i = 0; i < classes.length; i++) {
+				if (classes[i] === className) {
+					return;
+				}
+			}
+			classes.push(className);
+			el.className = classes.join(' ');
+		}
+
+
+		function removeClass(el, className) {
+			// assume using our addClass, which excludes duplicate classes
+			var classes = el.className.split(' ');
+			for (var i = 0; i < classes.length; i++) {
+				if (classes[i] === className) {
+					break;
+				}
+			}
+			classes.splice(i, 1);
+			el.className = classes.join(' ');
+		}
+	</script>
+</body>
+</html>

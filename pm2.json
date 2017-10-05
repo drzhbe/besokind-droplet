@@ -1,0 +1,8 @@
+{
+  "apps" : [{
+	"name"        	: "besokind-droplet",
+	"script"      	: "npm",
+	"args"			: "start",
+	"watch"       	: ["./index.js"],
+  }]
+}
